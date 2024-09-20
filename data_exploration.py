@@ -13,8 +13,8 @@ import streamlit as st
 import joblib
 
 
-root='streamlit-compagnon-immo'
-#root="."
+#root='streamlit-compagnon-immo'
+root="."
 
 
 @st.cache_data

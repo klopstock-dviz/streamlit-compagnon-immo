@@ -18,8 +18,8 @@ import time
 from PIL import Image
 
 
-root="."
-#root='.'
+#root='streamlit-compagnon-immo'
+root='.'
 
 def main():
     t=time.time()

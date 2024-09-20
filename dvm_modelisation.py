@@ -23,8 +23,8 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-root = "streamlit-compagnon-immo"
-#root = '.'
+#root = "streamlit-compagnon-immo"
+root = '.'
 
 # Liste des zones d'emploi
 df_zones_dvm = pd.read_csv(f'{root}/data/processed/dvm/dvm_par_zone/zone_name.csv')
