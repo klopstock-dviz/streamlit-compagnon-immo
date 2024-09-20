@@ -17,7 +17,7 @@ import branca.colormap as cm
 import streamlit as st
 
 
-root="streamlit"
+root='streamlit-compagnon-immo'
 #root="."
 
 @st.cache_data

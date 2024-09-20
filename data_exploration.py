@@ -13,7 +13,7 @@ import streamlit as st
 import joblib
 
 
-root="streamlit"
+root='streamlit-compagnon-immo'
 #root="."
 
 

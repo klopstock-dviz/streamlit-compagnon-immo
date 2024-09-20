@@ -23,7 +23,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 
-root = 'streamlit'
+root = "streamlit-compagnon-immo"
 #root = '.'
 
 # Liste des zones d'emploi

@@ -18,7 +18,7 @@ import time
 from PIL import Image
 
 
-root='streamlit'
+root='streamlit-compagnon-immo'
 #root='.'
 
 def main():
