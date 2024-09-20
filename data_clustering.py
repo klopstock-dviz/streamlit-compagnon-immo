@@ -17,8 +17,8 @@ import branca.colormap as cm
 import streamlit as st
 
 
-root='streamlit-compagnon-immo'
-#root="."
+#root='streamlit-compagnon-immo'
+root="."
 
 @st.cache_data
 def load_data_clustering():
