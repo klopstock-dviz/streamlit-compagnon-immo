@@ -57,19 +57,35 @@ def main():
     
 
     if page == pages[1] : 
-        st.write("Intro de la problèmatique & solutions proposées")
         st.markdown("""
-        # Objectif du projet
+        ### Auteurs:<br>
+        Ce projet a été développé par <a href='https://www.linkedin.com/in/cruchon-stephane/'>Stéphane CRUCHON</a> et <a href='https://www.linkedin.com/in/aghiles-chougar-04868813/'>Aghiles CHOUGAR</a> 
+        entre février et septembre 2024.
+        <hr>
+        """, unsafe_allow_html=True)
+        st.markdown("""
+        ### Contexte:
+        Dans le cadre de notre formation en science de données chez Datascientest, nous avons travaillé sur un modèle d'aide à la décision de sélection d'emplacement dans une perspective d'achat immobilier.
 
-        L’objectif du projet est de proposer des **indicateurs de dynamisme** pour une personne lambda, permettant de comprendre, sur une projection à 5 ans, la tendance associée à la dynamique d’un territoire. 
+        Conseiller un acheteur immobilier sur un territoire “pertinent”, “de qualité”, ou “recherché” comme disent les gens du métier, et au delà des inclinaisons culturelles et subjectives que présente l’acheteur, 
+        cela revient à conseiller un territoire “dynamique”, sur lequel l’immobilier ne risque pas de se déprécier, et qui maintiendra ou augmentera son attractivité marchande dans un futur proche.
+
+        A première vue tout le monde peut concevoir ce qu’est un territoire dynamique, avec des clichés communs tels que des immeubles qui poussent partout, des emplois disponibles facilement, des infrastructures de qualité, une démographie vigoureuse ...
+
+        Mais afin de produire un indicateur solide et complet, il faut déplier chacun des concepts derrière ces clichés, les relier dans le cadre d’un système organisé, équilibré, et évolutif dans le temps.
+        Aller au-delà des idées reçues et des clichés devient compliqué, car nous sommes en effet au croisement de différents savoirs: économie, sociologie, géographie, urbanisme ... 
+                    
+        ### Objectif du projet:
+
+        L’objectif limité du projet est de proposer des **indicateurs de dynamisme** pour une personne lambda, permettant de comprendre, sur une projection à 5 ans, la tendance associée à la dynamique d’un territoire. 
 
         L’**économie territoriale** ainsi que la **démographie** ont un impact non négligeable sur le dynamisme.
 
-        ## Focalisation des données
+        #### Focalisation des données
 
         Sur l’ensemble des données disponibles, nous nous sommes focalisés sur la **base SIREN** qui répertorie un grand nombre d'informations sur les établissements. 
 
-        ## Indicateurs extraits
+        #### Indicateurs extraits
 
         Associées aux **zones d’emplois** et par **mois**, nous avons extrait les éléments suivants :
 
@@ -83,7 +99,7 @@ def main():
         > Indicateur sur la durée de vie moyenne d'un établissement:
         > * Rapport entre la moyenne de la durée de vie des 5 années antérieures et la moyenne de la durée de vie des 5 années suivantes
 
-        ## Méthodes de modélisation
+        #### Méthodes de modélisation
 
         Pour modéliser ces variables au cours du temps, nous avons utilisé plusieurs techniques :
 
@@ -207,7 +223,40 @@ def main():
             > * S'obient en calculant l'écart entre créations brutes et fermetures d'établissements
             > * Requiert la prédiction des créations brutes et des fermetures séparement
             > * Le résultat élémentaire de la prédiction est une quantité, par trimestre et par commune
-        """, unsafe_allow_html=True)
+            
+            <hr>
+
+            **Projection de la cible:**<br>""", 
+        unsafe_allow_html=True)
+        detail_eval_modeles_volumes=st.toggle('Voir explications', key="detail_eval_modeles_volumes")
+        if detail_eval_modeles_volumes:
+            st.markdown("""
+                <u>**Projection de la cible pour l'évaluation des modèles:**</u><br>
+                > Les volumes de créations / fermetures présentés ci-dessous ont été prédits sur l'horizon 2018-2023.<br>
+                > Cela correspond à une pratique habituelle dans la prédiction des séries temporelles, où on cache au modèle une partie du
+                > futur connu, en demandant à ce dernier de tenter de le prédire.<br>
+                > En procédant de la sorte nous pouvons ainsi évaluer la perfomance du modèle en calculant l'écart en le chiffre réel et sa prédiction.
+                > <br>
+                > Comme nous avons besoin d'une valeur normalisée pour comparer les performances entre chaque zone d'emploi, nous avons retenu le ratio
+                > volumes prédits par le modèle / volumes réels, un ratio idéal étant de 1 (volume prédit = volume réel)
+                
+                <br><br>
+                        
+                <u>**Projection de la cible pour un usage pratique:**</u><br>
+                > Un indicateur concret et utile serait le ratio volumes prédits (2025-2030) / volumes passées (2020-2024).
+                > <br>
+                > <br>
+                > Si nous nous intéressons aux volumes de créations nettes d'établissements, nous pourrons dire que:
+                > * Un ratio proche de 1 signifie que le volume d'établissements prédit sur 5 ans est proche du passé -> zone d'emploi stable.
+                > * Un ratio inférieur à 1 signifie que les créations nettes sur les 5 prochaines années sera plus faible que sur les 5 dernières -> zone d'emploi atone.
+                > * Un ratio supérieur à 1 signifie que les créations nettes sur les 5 prochaines années sera plus élevé que sur les 5 dernières -> zone d'emploi dynamique.
+                > <br>
+                > 
+                > De cette façon nous pouvons calculer un indicateur générique et facile à comprendre.<br>
+                > Malheureusement par manque de temps il n'a pas été possible de ré-entrainer les modèles sur cet horizon de prédiction cible, 
+                > cet indicateur métier n'est donc pas exposé pour cette soutenance.
+                
+            """, unsafe_allow_html=True)
         st.write("---")
         st.write("### Etapes:")
         # Lire le fichier diag de flux
@@ -807,11 +856,90 @@ def main():
 
     if page==pages[6]:
         st.markdown("""
-            #### Conclusions et bilan:
-            * Conclusion générale
-            * Conclusion concernant la prédiction des volumes 
-            * Conclusion concernant la durée de vie moyenne
-            * Conclusion concernant le clustering
+            ## Conclusions et perspective:
+
+            ### Conclusion générale:
+            Prévoir l'évolution des territoires se révèle être une tâche difficile. 
+            Cette difficulté est d'autant plus grande quand on ne regarde que le passé, et plus encore un seul aspect du passé (économie).
+            L'idéal pour nous aurait été d'avoir des variables directrices, corrélées au dynamisme passé, et disponibles dans le futur.
+            Cela aurait pu être les investissements/subventions dans les infrastructures et les établissements, l'évolution démographique ... mais ces projections ne sont pas disponibles.
+            
+            Néanmoins nos modèles concernant les créations nettes des établissements et leur durée de vie ont donné de bons résultats, avec des ratios réel/prédiction assez proches de 1.
+                                
+            ### Conclusion concernant les modèles de prédiction:
+            Nous pouvons dire que notre objectif de prédire le dynamisme des territoires n’est que partiellement atteint, car nous n’avons 
+            modélisé que la dimension économique des territoires, et d’une façon étroite (volumes et durée de vie des établissements).
+            La raison est liée à l'absence de séries temporelles sur les autres dimensions du dynamisme des territoires, comme la démographie, le secteur du BTP, les infrastructures publiques, l'emploi ...
+            <br>
+            Même si des séries existent pour certaines de ces thématiques, elles ne sont pas aussi longues, ou pas aussi fines (dans le temps et l'espace) que notre série principale qui porte sur les créations des établissements.
+                    
+            
+            ### Conclusion concernant le clustering:
+            Le clustering et particulièrement l'application des modèles de réduction (T-SNE et UMAP) nous montrent un regroupement homogène des communes selon leurs
+            caractéristiques socio-économiques, démographiques et immobilières.
+            <br>
+            En général les communes les plus riches (revenus des ménages) et les plus chères (immobilier), sont celles qui connaissent la démographie la plus dynamique, les taux d'emploi et les taux de diplômés (>bac +2) les plus élevés.<br>
+            Cependant nous ne voyons pas de corrélation de ces indicateurs avec les volumes de création et la durée de vie des établissements.
+                    
+            ### Perspectives:
+            Les modèles que nous avons développé pourraient être utiles dans divers secteurs, particulièrement si nous ajoutons des couches de précision pour discriminer les prédictions par type d’activité exercée, et tranches d’effectifs employés.
+            Cette extension peut être envisagée à condition de trouver au moins une série temporelle sur la même structure que la base Sirène, et fortement corrélée à cette dernière.
+
+            Les secteurs d’activité concernés peuvent être:
+            ##### <u>1. Agences immobilières:</u>
+            * Prospection et acquisition : <br>
+            Les agences immobilières peuvent utiliser ces modèles pour identifier les zones géographiques où de nouvelles entreprises sont susceptibles de se créer. Cela leur permettrait de cibler des acheteurs particuliers pour des projets résidentiels, ou des investisseurs potentiels pour l'achat ou la location de biens immobiliers commerciaux.
+
+            * Évaluation des tendances du marché : <br> 
+            Les modèles peuvent aider à anticiper la demande pour des espaces commerciaux dans certaines régions, permettant aux agences de mieux ajuster leur offre de service.
+
+
+            ##### <u>2. Bâtiment et Travaux Publics (BTP):</u>
+            * Planification de projets de construction: <br>
+            Les entreprises de construction peuvent utiliser les modèles pour prévoir les besoins en nouvelles infrastructures (logements, bureaux, commerces, usines, entrepôts, etc.) dans les territoires où une croissance économique est attendue.
+
+            * Optimisation des ressources : <br>
+            Les prédictions peuvent aider à mieux allouer les ressources (main-d'œuvre, matériaux, équipements) en fonction des zones où une hausse de l'activité économique est prévue.
+
+            * Anticipation des besoins en infrastructures publiques: <br>
+            Les collectivités locales et les entreprises de BTP peuvent planifier à l'avance les infrastructures publiques (routes, ponts, réseaux de transport) en fonction des zones de développement économique.
+
+
+            ##### <u>3. Implantation de nouvelles entreprises:</u>
+            * Choix de l'emplacement:<br>
+            Les entrepreneurs et les entreprises cherchant à s'implanter peuvent utiliser les prédictions, en complément des outils de géomarketing, pour identifier les zones les plus prometteuses, en termes de croissance économique, de demande de marché et de concurrence.
+
+            * Évaluation des risques: <br>
+            Les investisseurs et les entreprises peuvent évaluer les risques économiques régionaux, en identifiant les zones où la création d'entreprises est susceptible de ralentir ou d'accélérer, influençant ainsi leurs décisions d'investissement.
+
+            * Stratégies de croissance: <br>
+            Les entreprises existantes peuvent utiliser le modèle pour planifier le développement de leur activité, en identifiant les secteurs économiques les plus dynamiques.
+
+            ##### <u>4. Secteur financier (banques, assurances):</u>
+            * Analyse de crédit : <br>
+            Les banques et institutions financières peuvent utiliser les prévisions pour évaluer la viabilité des prêts aux entreprises dans certains territoires ou secteurs d'activité, en tenant compte des tendances économiques locales.
+
+            * Souscription d'assurance: <br>
+            Les compagnies d'assurance peuvent ajuster leurs primes, selon les territoires où la création d'entreprises et leur durée de vie est en augmentation ou en déclin.
+
+            ##### <u>5. Planification urbaine et développement économique:</u>
+            * Développement local : <br>
+            Les communes et régions peuvent utiliser le modèle pour planifier le développement économique local, en se concentrant sur les territoires et secteurs d’activité où une augmentation des créations d'entreprises est prévue.
+
+            * Attraction d'investissements: <br>
+            Les agences de développement économique peuvent utiliser ces informations pour attirer des investissements dans des secteurs d’activité ou des territoires spécifiques, qui montrent des prévisions favorables de création d'entreprises.
+
+            * Développement des infrastructures: <br>
+            Les autorités locales peuvent prévoir les besoins en infrastructures (transport, éducation, santé) en fonction de la croissance attendue du nombre d'entreprises.
+
+            ##### <u>6. Conseil et analyse économique:</u>
+            Les cabinets de conseil peuvent utiliser les prédictions pour fournir des conseils aux entreprises, en les aidant à identifier les opportunités de marché et à planifier leur expansion.
+
+            ##### <u>7. Emploi et recrutement:</u>            
+            Ces modèles peuvent aider les agences de recrutement à cibler efficacement les zones à fort potentiel, anticiper les besoins en main d’œuvre, 
+            optimiser leurs propres ressources selon les zones et les profils les plus en demande, et développer des partenariats à long terme avec leurs clients.
+            
+            
         """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
